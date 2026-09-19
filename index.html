@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prueba EducaAnd</title>
+</head>
+<body>
+  <h1>Prueba de acceso EducaAnd</h1>
+
+  <button id="probar">Probar acceso</button>
+
+  <pre id="resultado">Pendiente de prueba...</pre>
+
+  <script>
+    const GAS_URL =
+      "https://script.google.com/a/macros/g.educaand.es/s/AKfycbxprDkRO05LzRdxBAh4e62JkykeglmaMdoXI6Ovk3qAI5LUZJ9KEV0o-gyBnZk03hy97g/exec";
+
+    document.getElementById("probar").addEventListener("click", async () => {
+      const resultado = document.getElementById("resultado");
+      resultado.textContent = "Comprobando...";
+
+      try {
+        const response = await fetch(GAS_URL, {
+          method: "GET",
+          credentials: "include",
+          redirect: "follow"
+        });
+
+        const texto = await response.text();
+
+        resultado.textContent =
+          "HTTP: " + response.status +
+          "\nURL final: " + response.url +
+          "\n\nRespuesta:\n" + texto;
+
+      } catch (error) {
+        resultado.textContent =
+          "ERROR\n\n" +
+          error.name + ": " + error.message;
+      }
+    });
+  </script>
+</body>
+</html>
